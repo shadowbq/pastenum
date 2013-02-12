@@ -1,0 +1,52 @@
+Pastenum - A Corelan Team Production
+Written by: Nullthreat
+
+www.corelan.be
+www.nullthreat.net
+irc.freenode.net #corelan
+
+INSTALL:
+
+Backtrack 5:
+1. Make sure you are using ruby 1.9.2 by running update-alternatives
+	update-alternatives --config ruby
+	ruby -v  
+
+2. Ensure all gems are installed
+	gem install mechanize gscraper uri-query_params colored
+
+3. Download Pastenum from http://redmine.corelan.be/projects/corelan-pastenum/files
+
+4. Find cool stuff with Pastenum
+	
+
+Non-Backtrack5:
+1. Install RVM - Follow directions at http://rvm.beginrescueend.com/
+2. Install Ruby 1.9.2 - rvm install ruby-1.9.2
+3. Install Gems - gem install mechanize gscraper uri-query_params colored
+	# If you get an error about nokogiri try: apt-get install libxslt1-dev
+
+USEAGE:
+
+Run - ruby pastenum.rb
+
+When prompted enter a search term.
+
+Once the application is complete it will generate "report.html"
+	Note: If more then 100 results are found, it can take some time to load the "report.html" file.
+	
+RELEASE NOTES:
+6/05/2011
+        v .2
+	Added BT5 install instructions to README
+	Fixed some formatting
+	Generally Cleaned Code
+
+3/25/2011
+	v .1 RC2
+	Added github support
+	Added ability to enable and disable searches individually
+
+3/22/2011
+	v .1 RC1
+	Initial public release
