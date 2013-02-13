@@ -1,5 +1,4 @@
 require 'optparse'
-require 'highline/import'
 require 'pastenum'
 require 'colored'
 
