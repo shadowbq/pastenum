@@ -20,12 +20,7 @@ module Pastenum
           results = @agent.get("https://gist.github.com/search?page=#{start_page}&q=#{@dork}")
             results.links.each do |link|   
               if link.text.match(/\s\/\s/)
-                address = link.href
-                  if 
-                    addresses_gist.include?(address) == true
-                  else
-                    addresses_gist << address
-                  end
+                 addresses_gist << link.href unless addresses_gist.include?(link.href)
               end
           end
           start_page += 1

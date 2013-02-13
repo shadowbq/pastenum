@@ -18,16 +18,10 @@ module Pastenum
         pages.times do
           print ".".green
           results = @agent.get("https://github.com/search?langOverride=&language=&q=#{@dork}&repo=&start_value=#{start_page}&type=Code&x=21&y=22")
-            results.links.each do |link|
-              if link.text.match(/\//)
-              address = link.href
-              address["tree"] = "raw"
-              address = "https://github.com#{address}"
-              if 
-                addresses_github.include?(address) == true
-              else
-                addresses_github << address
-              end
+          results.links.each do |link|
+            if link.text.match(/\//)
+              address = "https://github.com#{link.href}"
+              addresses_github << address unless addresses_gist.include?(address)
             end
             start_page += 1
           end
