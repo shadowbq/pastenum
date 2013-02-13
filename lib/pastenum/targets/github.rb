@@ -21,7 +21,7 @@ module Pastenum
           results.links.each do |link|
             if link.text.match(/\//)
               address = "https://github.com#{link.href}"
-              addresses_github << address unless addresses_gist.include?(address)
+              addresses_github << address unless addresses_github.include?(address)
             end
             start_page += 1
           end
