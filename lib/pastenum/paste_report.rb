@@ -8,14 +8,18 @@ class Report
     @addresses_gist = addresses_gist
   end
       
-  def report
+  def to_file
     puts "[*] Creating HTML Report".green
     print "[*] Status: ".green
     file = File.open('report.html', 'w') 
     
     # Header
     
-    file.write("<html><head><title>Pastesearch Results for #{@dork}</title><link rel=\"stylesheet\" type=\"text/css\" href=\"lib/css/main.css\" media=\"screen\" /></head><body><div id=\"container\"><div id=\"logo\"><img src=\"lib/img/logo.gif\" width=\"114\" height=\"36\" /></div><div id=\"menu\">Pastesearch: This can take some time to render</div><div id=\"content\">")
+    file.write("<html><head><title>Pastesearch Results for #{@dork}</title><link rel=\"stylesheet\" type=\"text/css\" href=\"lib/css/main.css\" media=\"screen\" /></head>")
+    
+    file.write("<body><div id=\"container\"><div id=\"logo\"><img src=\"lib/img/logo.gif\" width=\"114\" height=\"36\" /></div>")
+    file.write("<div id=\"menu\">Pastesearch: This can take some time to render</div>")
+    file.write("<div id=\"content\">")
         
     #Pastie.org
     
@@ -61,8 +65,12 @@ class Report
     
     # Footer
     
-        file.write("</div><div id=\"footer\">&copy; Corelan Team | Written by Nullthreat</div><center><img src=\"lib/img/corelanlogo_small.jpg\"></center></div></body></html>")
-        file.close
-        puts "\n[*] HTML Report Created".green
-      end
+    file.write("</div>")
+    file.write("<div id=\"footer\">&copy; Corelan Team | Written by Nullthreat</div>")
+    file.write("<center><img src=\"lib/img/corelanlogo_small.jpg\"></center>")
+    file.write("</div></body></html>")
+    file.close
+    
+    puts "\n[*] HTML Report Created".green
+  end
 end

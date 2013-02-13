@@ -1,8 +1,8 @@
-
+# Internal Gist Gist.github Search 
 class Gist < Target
 
   def initialize(dork)
-    @enabled = 0 #1 is enabled, 0 is disabled
+    @enabled = 1 #1 is enabled, 0 is disabled
     @dork = URI.escape(dork)
     @agent = Mechanize.new
     @max_pages = 25

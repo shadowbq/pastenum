@@ -1,7 +1,8 @@
+#Internal search implementation for pastie.org (deprecated, migrate to Gscraper)
 class Pastie < Target
   
   def initialize(dork)
-    @enabled = 1 #1 is enabled, 0 is disabled
+    @enabled = 0 #1 is enabled, 0 is disabled
     @dork = URI.escape(dork)
     @agent = Mechanize.new
   end

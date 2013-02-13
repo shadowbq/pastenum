@@ -1,3 +1,4 @@
+#Internal www.github.com search scraper
 class Github < Target
 
   def initialize(dork)

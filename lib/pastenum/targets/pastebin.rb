@@ -1,3 +1,4 @@
+#Google sitesearch for pastebin using GScraper
 class Pastebin < Target
   
   def initialize(dork)

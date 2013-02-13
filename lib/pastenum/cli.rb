@@ -2,7 +2,7 @@ require 'optparse'
 require 'highline/import'
 require 'pastenum'
 require 'colored'
-require 'uri'
+
 
 module Pastenum
   module CLI
@@ -21,6 +21,6 @@ module Pastenum
     @github = Pastenum::Github.new(dork).search
     @gist = Pastenum::Gist.new(dork).search
 
-    Pastenum::Report.new(dork,$addresses_pastie,$addresses_pastebin,$addresses_github,$addresses_gist).report
+    Pastenum::Report.new(dork, @pastie, @pastebin, @github, @gist).to_file
   end
 end
