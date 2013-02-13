@@ -1,57 +1,58 @@
 # Internal Gist Gist.github Search 
 module Pastenum
   class Gist < Target
-
+    
+    attr_accessor :enabled, :max_pages
+    attr_reader :dork, :results
+    
     def initialize(dork)
-      @enabled = 1 #1 is enabled, 0 is disabled
+      @enabled = true
       @dork = URI.escape(dork)
       @agent = Mechanize.new
       @max_pages = 25
+      @results = Array.new
+      @vendor = "gist.github.com"
     end
 
     def search
-      unless @enabled == 0
-        start_page = 1
-        pages = page_numbers.to_i
-        addresses_gist = []
-        print "[*] Parsing pages:".green
-        pages.times do
+      if @enabled
+        puts "[*] Searching Gist".green
+        
+        current_page = 1
+        page_numbers.times do
           print ".".green
-          results = @agent.get("https://gist.github.com/search?page=#{start_page}&q=#{@dork}")
-            results.links.each do |link|   
+          page = @agent.get("https://gist.github.com/search?page=#{current_page}&q=#{@dork}")
+            page.links.each do |link|   
               if link.text.match(/\s\/\s/)
-                 addresses_gist << link.href unless addresses_gist.include?(link.href)
+                 @results << link.href unless @results.include?(link.href)
               end
           end
-          start_page += 1
+          current_page += 1
         end
+        puts "\n"
       end
-      puts "\n"
-      return addresses_gist
+      return @results
     end
   
     private 
-  
-    def page_fetch(page_num)
-      begin
-        @results = @agent.get("https://gist.github.com/search?page=#{page_num}&q=#{@dork}")
-      rescue
-        puts "[!] ERROR: Can not load gist.github - Check Connectivity".red
-        raise TargetUnreachable, "gist.github unreachable"
-      end
-    end
     
     def page_numbers
       page_num = 1
       next_page = true
-      puts "[*] Searching Gist - This is a little slow, Be patient".green
-      page_count = []
-      while next_page == true
-        page_fetch(page_num)
-        @results.links.each do |link|
+      
+      print "[*] Parsing pages:".green
+      while next_page && page_num < @max_pages
+        print "#".green
+        begin
+          page = @agent.get("https://gist.github.com/search?page=#{page_num}&q=#{@dork}")
+        rescue
+          puts "[!] ERROR: Can not load gist.github - Check Connectivity".red
+          raise TargetUnreachable, "gist.github unreachable"
+        end
+        
+        page.links.each do |link|
           if link.href.match(/\/search\?page\=/)
             if link.text.match(/Next/)
-              next_page = true
               page_num += 1
             else
               next_page = false
@@ -59,7 +60,9 @@ module Pastenum
           end
         end
       end
+      
       return page_num
+      
     end
   
   end

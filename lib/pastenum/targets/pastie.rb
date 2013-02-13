@@ -1,39 +1,39 @@
 #Internal search implementation for pastie.org (deprecated, migrate to Gscraper)
 module Pastenum
   class Pastie < Target
-  
+    
+    attr_accessor :enabled, :max_pages
+    attr_reader :dork, :results
+      
     def initialize(dork)
-      @enabled = 0 #1 is enabled, 0 is disabled
+      @enabled = false
       @dork = URI.escape(dork)
       @agent = Mechanize.new
+      @results = Array.new
+      @vendor = "pastie.org"
     end
 
     def search
-      unless @enabled == 0
-        agent = Mechanize.new
-        start_page = 1
-        pages = page_numbers
-        addresses_pastie = []
+      if @enabled 
         print "[*] Parsing pages:".green
-        pages.times do
+        
+        current_page = 1
+        page_numbers.times do
           print ".".green
-          results = @agent.get("http://pastie.org/search?&commit=Start+Search&page=#{start_page}&q=#{@dork}")
-          results.links.each do |link|
+          page = @agent.get("http://pastie.org/search?&commit=Start+Search&page=#{current_page}&q=#{@dork}")
+          page.links.each do |link|
             if link.href.match(/pastie\.org\/pastes/)
-              addresses_pastie << link.href
+              @results << link.href
             end
           end
-        start_page += 1
+          current_page += 1
         end
+        
         puts "\n"
-        if addresses_pastie.count == 0
-          puts "[!] No Items Found, Try Harder".red
-        else
-          puts "[*] Total Items found on Pastie: #{addresses_pastie.count}".green
-        end
+
       end
-      return addresses_pastie
-    
+      
+      return @results
     end
   
     private
