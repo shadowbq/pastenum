@@ -27,7 +27,7 @@ module Pastenum
           end
         end
       end
-    
+      puts "\n"
       return addresses_github
     
     end

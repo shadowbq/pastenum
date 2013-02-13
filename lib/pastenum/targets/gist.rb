@@ -26,6 +26,7 @@ module Pastenum
           start_page += 1
         end
       end
+      puts "\n"
       return addresses_gist
     end
   
