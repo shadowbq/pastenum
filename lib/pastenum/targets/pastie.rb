@@ -44,7 +44,7 @@ module Pastenum
         results = @agent.get("http://pastie.org/search?&commit=Start+Search&page=1&q=#{@dork}")
       rescue
         puts "[!] ERROR: Can not load pastie.org - Check Connectivity".red
-        exit
+        raise TargetUnreachable, "pastie.org unreachable"
       end
       puts "[*] Searching Pastie.org (Limit: 1000 Results)".green
       page_count = []

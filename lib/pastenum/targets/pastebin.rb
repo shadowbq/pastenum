@@ -34,12 +34,13 @@ module Pastenum
           end
         rescue
           puts "\n[!] ERROR: Maybe the googles banned you?".red
+          raise TargetUnreachable, "google search unreachable"
         end
         puts "\n"
         if addresses_pastebin.count == 0
           puts "[!] No Items Found, Try Harder".red
         else
-          puts "[*] Total Items found on Pastebin: #{$addresses_pastebin.count}".green
+          puts "[*] Total Items found on Pastebin: #{addresses_pastebin.count}".green
         end
       end
     

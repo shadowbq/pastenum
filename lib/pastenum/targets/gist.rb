@@ -41,7 +41,7 @@ module Pastenum
         @results = @agent.get("https://gist.github.com/search?page=#{page_num}&q=#{@dork}")
       rescue
         puts "[!] ERROR: Can not load gist.github - Check Connectivity".red
-        exit
+        raise TargetUnreachable, "gist.github unreachable"
       end
     end
     

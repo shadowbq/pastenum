@@ -45,7 +45,7 @@ module Pastenum
         results = @agent.get("http://github.com/search?langOverride=&language=&q=#{@dork}&repo=&start_value=1&type=Code&x=21&y=22")
       rescue
         puts "[!] ERROR: Can not load github - Check Connectivity".red
-        exit
+        raise TargetUnreachable, "github unreachable"
       end
       puts "[*] Searching Github".green
       page_count = []
