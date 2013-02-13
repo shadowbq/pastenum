@@ -1,3 +1,3 @@
 module Pastenum
-    VERSION = '0.2.2-alpha'
+    VERSION = '0.2.2'
 end

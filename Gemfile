@@ -1,8 +1,8 @@
 source :rubygems
 gemspec
 
-gem "mechanize" 
-gem "gscraper" 
-gem "uri-query_params" 
-gem "colored"
-gem "bump"
+gem "mechanize",        "~> 2.0"
+gem "gscraper",         "~> 0.4"
+gem "uri-query_params", "~> 0.7"
+gem "colored",          "~> 1.2"
+gem "bump",             "~> 0.3"
