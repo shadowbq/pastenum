@@ -1,5 +1,5 @@
 #Internal www.github.com search scraper
-class Github < Target
+class Github < Pastenum::Target
 
   def initialize(dork)
     @enabled = 1 #1 is enabled, 0 is disabled

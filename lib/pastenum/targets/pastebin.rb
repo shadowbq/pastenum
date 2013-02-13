@@ -1,5 +1,5 @@
 #Google sitesearch for pastebin using GScraper
-class Pastebin < Target
+class Pastebin < Pastenum::Target
   
   def initialize(dork)
     @enabled = 1 #1 is enabled, 0 is disabled

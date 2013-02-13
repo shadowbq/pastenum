@@ -1,5 +1,5 @@
 #Internal search implementation for pastie.org (deprecated, migrate to Gscraper)
-class Pastie < Target
+class Pastie < Pastenum::Targett
   
   def initialize(dork)
     @enabled = 0 #1 is enabled, 0 is disabled

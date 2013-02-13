@@ -1,5 +1,5 @@
 # Internal Gist Gist.github Search 
-class Gist < Target
+class Gist < Pastenum::Target
 
   def initialize(dork)
     @enabled = 1 #1 is enabled, 0 is disabled
