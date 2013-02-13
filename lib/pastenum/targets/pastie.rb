@@ -1,10 +1,41 @@
-class Pastie
-  def initialize(dork_url)
+class Pastie < Target
+  
+  def initialize(dork)
     @enabled = 1 #1 is enabled, 0 is disabled
-    @dork = dork_url
+    @dork = URI.escape(dork)
     @agent = Mechanize.new
   end
 
+  def search
+    unless @enabled == 0
+      agent = Mechanize.new
+      start_page = 1
+      pages = page_numbers
+      addresses_pastie = []
+      print "[*] Parsing pages:".green
+      pages.times do
+        print ".".green
+        results = @agent.get("http://pastie.org/search?&commit=Start+Search&page=#{start_page}&q=#{@dork}")
+        results.links.each do |link|
+          if link.href.match(/pastie\.org\/pastes/)
+            addresses_pastie << link.href
+          end
+        end
+      start_page += 1
+      end
+      puts "\n"
+      if addresses_pastie.count == 0
+        puts "[!] No Items Found, Try Harder".red
+      else
+        puts "[*] Total Items found on Pastie: #{addresses_pastie.count}".green
+      end
+    end
+    return addresses_pastie
+    
+  end
+  
+  private
+  
   def page_numbers
     puts "[*] Getting Results".green
     begin
@@ -30,30 +61,5 @@ class Pastie
     end
     page_count.max
   end
-
-  def search
-    unless @enabled == 0
-      agent = Mechanize.new
-      start_page = 1
-      pages = page_numbers
-      $addresses_pastie = []
-      print "[*] Parsing pages:".green
-      pages.times do
-        print ".".green
-        results = @agent.get("http://pastie.org/search?&commit=Start+Search&page=#{start_page}&q=#{@dork}")
-        results.links.each do |link|
-          if link.href.match(/pastie\.org\/pastes/)
-            $addresses_pastie << link.href
-          end
-        end
-      start_page += 1
-      end
-      puts "\n"
-      if $addresses_pastie.count == 0
-        puts "[!] No Items Found, Try Harder".red
-      else
-        puts "[*] Total Items found on Pastie: #{$addresses_pastie.count}".green
-      end
-    end
-  end
+  
 end

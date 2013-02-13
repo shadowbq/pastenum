@@ -1,9 +1,22 @@
-load 'lib/paste_report.rb'
-
-require 'rubygems'
-require 'mechanize'
+#STDLIBS
 require 'uri'
+require 'rubygems'
+
+# RubyGems
+require 'mechanize'
 require 'uri/query_params'
 require 'gscraper'
 require 'colored'
 
+# Internal 
+module Pastenum
+  $:.unshift(File.dirname(__FILE__))
+  require 'pastenum/main'
+  require 'pastenum/paste_report'
+  require 'pastenum/version'
+  require 'pastenum/target'
+  require 'pastenum/targets/gist'
+  require 'pastenum/targets/github'
+  require 'pastenum/targets/pastie'
+  require 'pastenum/targets/pastebin'
+end

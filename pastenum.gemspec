@@ -2,7 +2,7 @@ $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 name = "pastenum"
 require "#{name}/version"
 
-Gem::Specification.new name, Vendorer::VERSION do |s|
+Gem::Specification.new name, Pastenum::VERSION do |s|
   s.summary = "Search Pastebins for content, fork from nullthreat corelan pastenum2"
   s.authors = ["nullthreat", "Shadowbq"]
   s.email = "shadowbq@github.com"

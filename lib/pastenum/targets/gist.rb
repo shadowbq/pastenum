@@ -1,18 +1,45 @@
 
-class Gist
+class Gist < Target
 
-  def initialize(dork_url)
+  def initialize(dork)
     @enabled = 0 #1 is enabled, 0 is disabled
-    @dork = dork_url
+    @dork = URI.escape(dork)
     @agent = Mechanize.new
     @max_pages = 25
   end
 
-  def page_retreve(page_num)
+  def search
+    unless @enabled == 0
+      start_page = 1
+      pages = page_numbers.to_i
+      addresses_gist = []
+      print "[*] Parsing pages:".green
+      pages.times do
+        print ".".green
+        results = @agent.get("https://gist.github.com/search?page=#{start_page}&q=#{@dork}")
+          results.links.each do |link|   
+            if link.text.match(/\s\/\s/)
+              address = link.href
+                if 
+                  addresses_gist.include?(address) == true
+                else
+                  addresses_gist << address
+                end
+            end
+        end
+        start_page += 1
+      end
+    end
+    return addresses_gist
+  end
+  
+  private 
+  
+  def page_fetch(page_num)
     begin
-      @results = @agent.get("https://gist.github.com/gists/search?page=#{page_num}&q=#{@dork}&x=12&y=23")
+      @results = @agent.get("https://gist.github.com/search?page=#{page_num}&q=#{@dork}")
     rescue
-      puts "[!] ERROR: Can not load github - Check Connectivity".red
+      puts "[!] ERROR: Can not load gist.github - Check Connectivity".red
       exit
     end
   end
@@ -23,9 +50,9 @@ class Gist
     puts "[*] Searching Gist - This is a little slow, Be patient".green
     page_count = []
     while next_page == true
-      page_retreve(page_num)
+      page_fetch(page_num)
       @results.links.each do |link|
-        if link.href.match(/\/gists\/search\?page\=/)
+        if link.href.match(/\/search\?page\=/)
           if link.text.match(/Next/)
             next_page = true
             page_num += 1
@@ -37,28 +64,5 @@ class Gist
     end
     return page_num
   end
-
-  def search
-    unless @enabled == 0
-      start_page = 1
-      pages = page_numbers.to_i
-      $addresses_gist = []
-      print "[*] Parsing pages:".green
-      pages.times do
-        print ".".green
-        results = @agent.get("https://gist.github.com/gists/search?page=#{start_page}&q=#{@dork}&x=12&y=23")
-          results.links.each do |link|   
-            if link.text.match(/\s\/\s/)
-              address = link.href
-                if 
-                  $addresses_gist.include?(address) == true
-                else
-                  $addresses_gist << address
-                end
-            end
-        end
-        start_page += 1
-      end
-    end
-  end
+  
 end

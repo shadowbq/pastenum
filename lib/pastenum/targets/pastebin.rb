@@ -1,4 +1,4 @@
-class Pastebin
+class Pastebin < Target
   
   def initialize(dork)
     @enabled = 1 #1 is enabled, 0 is disabled
@@ -9,7 +9,7 @@ class Pastebin
   def search
     unless @enabled == 0
       puts "[*] Searching Pastebin.com (Limit: First #{@max_pages} Pages)".green
-      $addresses_pastebin = []
+      addresses_pastebin = []
       q = GScraper::Search.query(:query => @dork, :site => 'pastebin.com')
       print "[*] Parsing pages: ".green
         begin
@@ -23,9 +23,9 @@ class Pastebin
           url4 = url3.split("/").last
             if url4.length == 8
               if 
-                $addresses_pastebin.include?(url4) == true
+                addresses_pastebin.include?(url4) == true
               else
-                $addresses_pastebin << url4
+                addresses_pastebin << url4
               end
             end
           end
@@ -34,11 +34,13 @@ class Pastebin
         puts "\n[!] ERROR: Maybe the googles banned you?".red
       end
       puts "\n"
-      if $addresses_pastebin.count == 0
+      if addresses_pastebin.count == 0
         puts "[!] No Items Found, Try Harder".red
       else
         puts "[*] Total Items found on Pastebin: #{$addresses_pastebin.count}".green
       end
     end
+    
+    return addresses_pastebin
   end
 end
