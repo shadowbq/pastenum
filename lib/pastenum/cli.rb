@@ -16,21 +16,23 @@ module Pastenum
     puts "[?] Input a search string:".green
     
     dork = gets
-    @pastie = Pastenum::Pastie.new(dork)
-    @pastie.search
-    @pastie.summary
-    
-    @pastebin = Pastenum::Pastebin.new(dork)
-    @pastebin.search
-    @pastebin.summary
+        
+    @gist = Pastenum::Gist.new(dork)
+    @gist.search
+    @gist.summary
     
     @github = Pastenum::Github.new(dork)
     @github.search
     @github.summary
     
-    @gist = Pastenum::Gist.new(dork)
-    @gist.search
-    @gist.summary
+    @pastebin = Pastenum::Pastebin.new(dork)
+    @pastebin.search
+    @pastebin.summary
+
+    @pastie = Pastenum::Pastie.new(dork)
+    @pastie.search
+    @pastie.summary
+
 
 
     Pastenum::Report.new(dork, @pastie.results, @pastebin.results, @github.results, @gist.results).to_file
