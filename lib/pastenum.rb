@@ -7,6 +7,7 @@ require 'mechanize'
 require 'uri/query_params'
 require 'gscraper'
 require 'colored'
+require 'json'
 
 # Internal 
 module Pastenum

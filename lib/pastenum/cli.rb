@@ -168,7 +168,7 @@ module Pastenum
       end
       
       if options[:json]
-        Pastenum::JSON.new(dork, @pastie, @pastebin, @github, @gist)
+        Pastenum::JSON.new(dork, @gist, @github, @pastebin, @pastie)
       end
 
     end
