@@ -30,7 +30,7 @@ module Pastenum
           print ".".green
         end
         file.write("<hr><hr>")
-        end
+      end
     
       #gist.github.com
       unless @addresses_gist.empty?

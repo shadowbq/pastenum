@@ -12,7 +12,8 @@ require 'colored'
 module Pastenum
   $:.unshift(File.dirname(__FILE__))
   require 'pastenum/main'
-  require 'pastenum/paste_report'
+  require 'pastenum/report'
+  require 'pastenum/json'
   require 'pastenum/version'
   require 'pastenum/target'
   require 'pastenum/targets/gist'
