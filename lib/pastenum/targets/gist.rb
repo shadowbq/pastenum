@@ -23,7 +23,12 @@ module Pastenum
           print ".".green
           page = @agent.get("https://gist.github.com/search?page=#{current_page}&q=#{@dork}")
             page.links.each do |link|   
-              if link.text.match(/\s\/\s/)
+              
+              # Example Hits to find
+              # "/shadowbq/4556950"
+              # "/shadowbq/2718948"
+              
+              if link.href.match(/\w+\/[0-9]+/)
                  @results << link.href unless @results.include?(link.href)
               end
           end
@@ -36,12 +41,14 @@ module Pastenum
   
     private 
     
+    #TODO: This is very inefficient. This is double fetch reading.  
     def page_numbers
       page_num = 1
       next_page = true
       
       print "[*] Parsing pages:".green
       while next_page && page_num < @max_pages
+
         print "#".green
         begin
           page = @agent.get("https://gist.github.com/search?page=#{page_num}&q=#{@dork}")
@@ -50,15 +57,24 @@ module Pastenum
           raise TargetUnreachable, "gist.github unreachable"
         end
         
+        # Find the link with the -> arrow, is it enabled?
+        # //div[@class='pagination']
+        pagination_parsed = false
+        
         page.links.each do |link|
           if link.href.match(/\/search\?page\=/)
-            if link.text.match(/Next/)
+            if link.text.match(/#x2192/)
               page_num += 1
             else
               next_page = false
             end
+            pagination_parsed = true
           end
         end
+        
+        #handle single page of results
+        next_page = false unless pagination_parsed
+        
       end
       
       return page_num
