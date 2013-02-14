@@ -2,7 +2,7 @@ module Pastenum
   class Target
     
     attr_accessor :max_pages, :verbose
-    attr_reader :dork, :results
+    attr_reader :dork, :results, :vendor
 
     def initialize(dork_url)
       @dork = dork_url
