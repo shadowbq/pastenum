@@ -42,7 +42,7 @@ module Pastenum
       
       #Github.com
       unless @addresses_github.empty?
-        file.write("<br /><h2>Site: Github - Found: #{@addresses_github.count} Items</h2>\n"
+        file.write("<br /><h2>Site: Github - Found: #{@addresses_github.count} Items</h2>\n")
         file.write("NOTE: Github passes 'x-frame-options deny' so iframes are useless.\n")
         @addresses_github.each do |links|
           file.write("<p>link: <a href=\"#{links}\" target=\"_blank\">#{links}</a></p>\n")
