@@ -2,11 +2,7 @@
 module Pastenum
   class Gist < Target
     
-    attr_accessor :enabled, :max_pages
-    attr_reader :dork, :results
-    
     def initialize(dork)
-      @enabled = true
       @dork = URI.escape(dork)
       @agent = Mechanize.new
       @max_pages = 25
@@ -15,27 +11,24 @@ module Pastenum
     end
 
     def search
-      if @enabled
-        puts "[*] Searching Gist".green
-        
-        current_page = 1
-        page_numbers.times do
-          print ".".green
-          page = @agent.get("https://gist.github.com/search?page=#{current_page}&q=#{@dork}")
-            page.links.each do |link|   
+      puts "[*] Searching Gist".green if @verbose
+      current_page = 1
+      page_numbers.times do
+        print ".".green if @verbose
+        page = @agent.get("https://gist.github.com/search?page=#{current_page}&q=#{@dork}")
+          page.links.each do |link|   
               
-              # Example Hits to find
-              # "/shadowbq/4556950"
-              # "/shadowbq/2718948"
+            # Example Hits to find
+            # "/shadowbq/4556950"
+            # "/shadowbq/2718948"
               
-              if link.href.match(/\w+\/[0-9]+/)
-                 @results << link.href unless @results.include?(link.href)
-              end
-          end
-          current_page += 1
+            if link.href.match(/\w+\/[0-9]+/)
+               @results << link.href unless @results.include?(link.href)
+            end
         end
-        puts "\n"
+        current_page += 1
       end
+      puts "\n" if @verbose
       return @results
     end
   
@@ -46,15 +39,14 @@ module Pastenum
       page_num = 1
       next_page = true
       
-      print "[*] Parsing pages:".green
+      print "[*] Parsing pages:".green if @verbose
       while next_page && page_num < @max_pages
 
-        print "#".green
+        print "#".green if @verbose
         begin
           page = @agent.get("https://gist.github.com/search?page=#{page_num}&q=#{@dork}")
         rescue
-          puts "[!] ERROR: Can not load gist.github - Check Connectivity".red
-          raise TargetUnreachable, "gist.github unreachable"
+          raise TargetUnreachable, "[!] ERROR: Can not load gist.github - Check Connectivity"
         end
         
         # Find the link with the -> arrow, is it enabled?

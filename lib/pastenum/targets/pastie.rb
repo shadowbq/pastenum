@@ -2,11 +2,7 @@
 module Pastenum
   class Pastie < Target
     
-    attr_accessor :enabled, :max_pages
-    attr_reader :dork, :results
-      
     def initialize(dork)
-      @enabled = false
       @dork = URI.escape(dork)
       @agent = Mechanize.new
       @results = Array.new
@@ -14,25 +10,19 @@ module Pastenum
     end
 
     def search
-      if @enabled 
-        print "[*] Parsing pages:".green
-        
-        current_page = 1
-        page_numbers.times do
-          print ".".green
-          page = @agent.get("http://pastie.org/search?&commit=Start+Search&page=#{current_page}&q=#{@dork}")
-          page.links.each do |link|
-            if link.href.match(/pastie\.org\/pastes/)
-              @results << link.href
-            end
+      print "[*] Parsing pages:".green if @verbose
+      current_page = 1
+      page_numbers.times do
+        print ".".green if @verbose
+        page = @agent.get("http://pastie.org/search?&commit=Start+Search&page=#{current_page}&q=#{@dork}")
+        page.links.each do |link|
+          if link.href.match(/pastie\.org\/pastes/)
+            @results << link.href
           end
-          current_page += 1
         end
-        
-        puts "\n"
-
+        current_page += 1
       end
-      
+      puts "\n" if @verbose
       return @results
     end
   
@@ -43,10 +33,9 @@ module Pastenum
       begin
         results = @agent.get("http://pastie.org/search?&commit=Start+Search&page=1&q=#{@dork}")
       rescue
-        puts "[!] ERROR: Can not load pastie.org - Check Connectivity".red
-        raise TargetUnreachable, "pastie.org unreachable"
+        raise TargetUnreachable, "[!] ERROR: Can not load pastie.org - Check Connectivity"
       end
-      puts "[*] Searching Pastie.org (Limit: 1000 Results)".green
+      puts "[*] Searching Pastie.org (Limit: 1000 Results)".green if @verbose
       page_count = []
       results.links.each do |link|
         if link.href.match(/pastie.org\/pastes\//)

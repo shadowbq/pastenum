@@ -1,6 +1,8 @@
 module Pastenum
   class Target
-    # attr_accessor :enabled, :dork
+    
+    attr_accessor :max_pages, :verbose
+    attr_reader :dork, :results
 
     def initialize(dork_url)
       @dork = dork_url
@@ -14,10 +16,10 @@ module Pastenum
     
     def summary
       if results.count == 0
-        puts "[!] No Items Found on #{@vendor}, Try Harder".red
+        puts "[!] No Items Found on #{@vendor}, Try Harder".red if @verbose
       else
-        puts "[*] Total Items found on #{@vendor}: #{@results.count}".green
-      end
+        puts "[*] Total Items found on #{@vendor}: #{@results.count}".green if @verbose
+      end 
     end
     
   end
