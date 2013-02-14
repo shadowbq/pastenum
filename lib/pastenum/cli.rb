@@ -49,7 +49,7 @@ module Pastenum
         opt.separator "Output:: (Default output to STDOUT)"
         
         opt.on("-R","--report","Create an iframed report.html ") do
-          options[:onion] = true
+          options[:report] = true
         end
   
         opt.on("-J", "--json", "Create a JSON file with results ") do
