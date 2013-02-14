@@ -127,8 +127,14 @@ module Pastenum
         puts "++++++++++++++++++++++++++++++++++++++++++++++\n".green
       end
       
+      @gist = Pastenum::Gist.new(dork)
+      @github = Pastenum::Github.new(dork)
+      @pastebin = Pastenum::Pastebin.new(dork)
+      @pastie = Pastenum::Pastie.new(dork)
+      
+      
       if options[:gist]
-        @gist = Pastenum::Gist.new(dork)
+        
         @gist.verbose = options[:verbose]
         @gist.max_pages = options[:maxpages]
         @gist.search
@@ -137,7 +143,6 @@ module Pastenum
       end
       
       if options[:github]
-        @github = Pastenum::Github.new(dork)
         @github.verbose = options[:verbose]
         @github.max_pages = options[:maxpages]
         @github.search
@@ -146,7 +151,6 @@ module Pastenum
       end
       
       if options[:pastebin]
-        @pastebin = Pastenum::Pastebin.new(dork)
         @pastebin.verbose = options[:verbose]
         @pastebin.max_pages = options[:maxpages]
         @pastebin.search
@@ -155,7 +159,6 @@ module Pastenum
       end
 
       if options[:pastie]
-        @pastie = Pastenum::Pastie.new(dork)
         @pastie.verbose = options[:verbose]
         @pastie.max_pages = 2
         @pastie.search
