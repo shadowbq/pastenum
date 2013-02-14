@@ -53,7 +53,7 @@ module Pastenum
         end
   
         opt.on("-J", "--json", "Create a JSON file with results ") do
-          options[:test] = true
+          options[:json] = true
         end 
 
 
