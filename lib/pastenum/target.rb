@@ -8,8 +8,17 @@ module Pastenum
       @dork = dork_url
       @vendor = "TargetTemplate"
       @results = Array.new
+      @agent = Mechanize.new
     end
-
+    
+    def verify_ssl_mode
+      @agent.verify_mode
+    end
+    
+    def verify_ssl_mode=(mode)
+      @agent.verify_mode = mode
+    end
+    
     def search
       raise TargetTemplateErrorDirectCall
     end
