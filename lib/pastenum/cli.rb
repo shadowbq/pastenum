@@ -19,9 +19,10 @@ module Pastenum
       options[:github] = true
       options[:pastie] = false
       
+      options[:raw] = Pastenum::Defaults::Raw
       options[:onion] = false
       options[:test] = false
-      options[:verbose] = false
+      options[:verbose] = Pastenum::Defaults::Verbose
       options[:maxpages] = 2
       options[:tos] = false
       options[:ssl_verify] = true
@@ -35,10 +36,6 @@ module Pastenum
           options[:pastebin] = value
         end
         
-        opt.on('--[no-]bar') {|v| p v }
-        
-        
-        
         opt.on("-g","--[no-]gist","Search Gist.github.com","  Default: #{options[:gist]}") do |value|
           options[:gist] = value
         end
@@ -51,18 +48,22 @@ module Pastenum
           options[:pastie] = value
         end
         
-        opt.separator "Output:: (Default output to STDOUT)"
+        opt.separator "Report Output:: (Default output to STDOUT)"
         
-        opt.on("-R","--report","Create an iframed report.html ") do
+        opt.on("-H","--html-report","Create an html iframed (report.html) ") do
           options[:report] = true
         end
   
-        opt.on("-J", "--json", "Create a JSON file with results ") do
+        opt.on("-J", "--json-report", "Create a JSON file (report.json) ") do
           options[:json] = true
         end 
 
 
         opt.separator "Options::"
+        
+        opt.on("-r","--[no-]raw","use 'raw' urls instead if available" ,"  Default: #{options[:raw]}") do |value|
+          options[:raw] = value
+        end
         
         opt.on("-m","--maxpages=","maximum number of search results pages to iterate through" ,"  Default: #{options[:maxpages]}") do |value|
           options[:maxpages] = value
@@ -102,10 +103,10 @@ module Pastenum
         opt_parser.parse!
   
       #If options fail display help
-      rescue Exception => e  
-        puts e.message  
-        puts e.backtrace.inspect  
-        
+      #rescue Exception => e  
+      #  puts e.message  
+      #  puts e.backtrace.inspect  
+      rescue 
         puts opt_parser
         exit
       end
@@ -152,7 +153,11 @@ module Pastenum
         @gist.verify_ssl_mode = OpenSSL::SSL::VERIFY_NONE unless options[:ssl_verify]
         @gist.search
         @gist.summary
-        @gist.results.each { |hit| puts "https://gist.github.com#{hit}" } if !options[:report] && !options[:json]
+        if options[:raw]
+          @gist.results.each { |hit| puts "#{@gist.raw_url}#{hit}" } if !options[:report] && !options[:json]
+        else  
+          @gist.results.each { |hit| puts "#{@gist.vendor}#{hit}" } if !options[:report] && !options[:json]
+        end 
       end
       
       if options[:github]
@@ -160,7 +165,8 @@ module Pastenum
         @github.max_pages = options[:maxpages]
         @github.verify_ssl_mode = OpenSSL::SSL::VERIFY_NONE unless options[:ssl_verify]
         @github.search
-        @github.summary
+        @github.summary 
+        @github.raw = true if options[:raw]
         puts @github.results if !options[:report] && !options[:json]
       end
       
@@ -169,7 +175,12 @@ module Pastenum
         @pastebin.max_pages = options[:maxpages]
         @pastebin.search
         @pastebin.summary
-        @pastebin.results.each { |hit| puts "http://pastebin.com/#{hit}" } if !options[:report] && !options[:json]
+        
+        if options[:raw]
+          @pastebin.results.each { |hit| puts "#{@pastebin.raw_url}#{hit}" } if !options[:report] && !options[:json]
+        else  
+          @pastebin.results.each { |hit| puts "http://pastebin.com/#{hit}" } if !options[:report] && !options[:json]
+        end 
       end
 
       if options[:pastie]

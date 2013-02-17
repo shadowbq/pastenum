@@ -4,10 +4,13 @@ module Pastenum
     
     def initialize(dork)
       @dork = URI.escape(dork)
-      @agent = Mechanize.new
+      #@agent = Mechanize.new
       @max_pages = 25
-      @results = Array.new
-      @vendor = "gist.github.com"
+      #@results = Array.new
+      @vendor = "https://gist.github.com/"
+      @raw_url = "https://raw.github.com/gist/"
+      
+      super
     end
 
     def search
@@ -17,19 +20,27 @@ module Pastenum
         print ".".green if @verbose
         page = @agent.get("https://gist.github.com/search?page=#{current_page}&q=#{@dork}")
           page.links.each do |link|   
-              
-            # Example Hits to find
+            if @raw
+            # Raw links do not use username only the code            
+            # "4556950"
+             if link.href.match(/\w+\/([0-9]+)/)
+                 @results <<  link.href.match(/\w+\/([0-9]+)/)[1] 
+              end
+            else 
+            # Example Hits to find stad links need username
             # "/shadowbq/4556950"
             # "/shadowbq/2718948"
-              
-            if link.href.match(/\w+\/[0-9]+/)
-               @results << link.href unless @results.include?(link.href)
+              if link.href.match(/(\w+\/[0-9]+)/)
+                 @results << link.href.match(/(\w+\/[0-9]+)/)[1]
+              end
             end
+            
         end
         current_page += 1
       end
+      
       puts "\n" if @verbose
-      return @results
+      return @results.uniq!  #light years faster than array.include X times along with an extra regex match
     end
   
     private 

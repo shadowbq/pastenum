@@ -1,14 +1,20 @@
 module Pastenum
   class Target
     
-    attr_accessor :max_pages, :verbose
-    attr_reader :dork, :results, :vendor
+    attr_accessor :max_pages, :verbose, :raw
+    attr_reader :dork, :results, :vendor, :raw_url
 
-    def initialize(dork_url)
-      @dork = dork_url
-      @vendor = "TargetTemplate"
-      @results = Array.new
-      @agent = Mechanize.new
+    def initialize(search_string)
+      @dork ||= search_string
+      
+      @vendor ||= "TargetTemplate"
+      @raw_url ||= "TargetRawTemplate"
+      
+      @results ||= Array.new
+      @agent ||= Mechanize.new
+      
+      @raw ||= Pastenum::Defaults::Raw
+      @verbose ||= Pastenum::Defaults::Verbose
     end
     
     def verify_ssl_mode

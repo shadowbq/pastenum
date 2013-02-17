@@ -7,6 +7,8 @@ module Pastenum
       @max_pages = 25
       @results = Array.new
       @vendor = "pastebin.com"
+      @raw_url = "http://pastebin.com/raw.php?i="
+      super
     end
   
     def search
@@ -18,19 +20,12 @@ module Pastenum
           print ".".green if @verbose
           page = q.page(i)
           page.each do |result|
-            result_url = result.url
-            url2 = result_url.to_s.split("&").first
-            url3 = url2.split("=").last
-            # url3 -> "http://pastebin.com/E7SmXKMs"
-            url4 = url3.split("/").last
-            # url4 -> "E7SmXKMs"
-            if url4.length == 8
-              if 
-                @results.include?(url4) == true
-              else
-                # result.cached_url.to_s
-                @results << url4
-              end
+            url = result.url.to_s.split("&").first.split("=").last
+            # url -> "http://pastebin.com/E7SmXKMs"
+            code = url.split("/").last
+            # code -> "E7SmXKMs"
+            if code.length == 8
+              @results << code
             end
           end
         end
@@ -38,7 +33,7 @@ module Pastenum
         raise TargetUnreachable, "[!] ERROR: Google search unreachable , Maybe the googles banned you?"
       end
       puts "\n" if @verbose
-      return @results
+      return @results.uniq!  
     end
 
   end

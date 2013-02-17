@@ -7,6 +7,7 @@ module Pastenum
       @agent = Mechanize.new
       @results = Array.new
       @vendor = "pastie.org"
+      super
     end
 
     def search
@@ -23,7 +24,7 @@ module Pastenum
         current_page += 1
       end
       puts "\n" if @verbose
-      return @results
+      return @results.uniq!
     end
   
     private

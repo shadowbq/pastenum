@@ -1,4 +1,25 @@
-#Internal www.github.com search scraper
+#Internal www.github.com search scraper (Code Type)
+
+# Original pastenum enumerated the repo, we actually want the file.
+
+# Standard result part 1 
+# https://github.com/ryuzee/PHPMyScrum
+
+# Standard result part 2 (blob) 
+# https://github.com/ryuzee/PHPMyScrum/blob/71dc45c31220bfa04057f9c65a7dfbc046871fa6/.box
+
+# Raw url
+# https://raw.github.com/ryuzee/PHPMyScrum/71dc45c31220bfa04057f9c65a7dfbc046871fa6/.box
+
+# [8] pry(main)> b = "https://github.com/ryuzee/foo1/blob/71dc45c31220bfa04057f9c65a7dfbc046871fa6/.box"
+# [9] pry(main)> b.match(/(\w+\/\w+)\/(blob)\/([a-z0-9]+)/)
+# => #<MatchData
+# "ryuzee/foo1/blob/71dc45c31220bfa04057f9c65a7dfbc046871fa6"
+# 1:"ryuzee/foo1"
+# 2:"blob"
+# 3:"71dc45c31220bfa04057f9c65a7dfbc046871fa6">
+
+
 module Pastenum
   class Github < Target
     
@@ -7,7 +28,10 @@ module Pastenum
       @agent = Mechanize.new
       @max_pages = 25
       @results = Array.new
-      @vendor = "github.com"
+      @vendor = "https://github.com/"
+
+      @raw_url = "https://raw.github.com/gist/"
+      super
     end
 
     def search
@@ -17,15 +41,22 @@ module Pastenum
         print ".".green if @verbose
         page = @agent.get("https://github.com/search?langOverride=&language=&q=#{@dork}&repo=&start_value=#{current_page}&type=Code&x=21&y=22")
         page.links.each do |link|
-          if link.text.match(/\//)
-            address = "https://github.com#{link.href}"
-            @results << address unless @results.include?(address)
+          #puts "#{link.href}"
+          if link.href.match(/\/blob/)
+            #puts "matched blob"
+            if @raw
+              matchdata = link.href.match(/(\w+\/\w+)\/(blob)\/([a-z0-9]+)/)
+              address = "https://raw.github.com/#{matchdata[1]}/#{matchdata[3]}/"
+              @results << address
+            else
+              @results << "https://github.com/#{link.href.split("#").first}"
+            end
           end
           current_page += 1
         end
       end
       puts "\n" if @verbose
-      return @results
+      return @results.uniq! 
     end
   
     private
@@ -54,11 +85,8 @@ module Pastenum
       end
       
       if page_count.max > @max_pages
-        #puts "[*] #{page_count.max} pages of results found.".green
-        #puts "[*] Getting the first #{@max_pages} pages".green
         return @max_pages
       else
-        #puts "[*] #{page_count.max} pages of results found.".green
         return page_count.max
       end
     end
