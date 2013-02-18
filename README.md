@@ -1,6 +1,10 @@
 #Pastenum
 
-Pastenum is a gem rewrite of nullthreat's original pastenum2 google scrapper. 
+Pastenum is a text dump enumeration tool. It is designed to help find and enumerate datadumps, and doxs posted on public sites. 
+
+It currently searches sites github.com, gist.github.com, pastebin.com, and pastie.org.
+
+Pastenum is a gem rewrite of nullthreat's original [pastenum2](http://redmine.corelan.be/projects/corelan-pastenum) release in 2011. 
 
 ## Install:
 
@@ -41,7 +45,7 @@ Options::
     -V, --[no-]ssl-verify            Verify SSL certificates
                                        Default: true
     -v, --verbose                    Run verbosely
-    -h, --help                       Display this scree
+    -h, --help                       Display this screen
 ```
 
 ** Note: If generating a report iframe, it can take some time to load the "report.html" file.**
