@@ -3,14 +3,16 @@
 # http://pastie.org/pastes/6208073
 # Raw link
 # http://pastie.org/pastes/6208073/text
+
+# url -> "http://pastie.org/pastes/6700343"
+
 module Pastenum
   class Pastie < Target
     
     def initialize(dork)
       @dork = URI.escape(dork)
-      @agent = Mechanize.new
-      @results = Array.new
       @vendor = "http://pastie.org"
+
       super
     end
 
@@ -24,11 +26,13 @@ module Pastenum
           page = q.page(i)
           page.each do |result|
             if result.url.to_s.match(/pastes\/[0-9]+$/)
-              # url -> "http://pastie.org/pastes/6700343"
-              # to_s.match(/pastes\/([0-9]+)$/)[1]
               code = result.url.to_s.split("/").last
               # code -> "6700343"
-              @results << code
+              if @raw 
+                @results << "http://pastie.org/pastes/#{code}/text"
+              else
+                @results << "http://pastie.org/pastes/#{code}"
+              end
             end
           end
         end

@@ -25,12 +25,9 @@ module Pastenum
     
     def initialize(dork)
       @dork = URI.escape(dork)
-      @agent = Mechanize.new
-      @max_pages = 25
-      @results = Array.new
       @vendor = "https://github.com/"
-
       @raw_url = "https://raw.github.com/gist/"
+      
       super
     end
 
@@ -41,15 +38,13 @@ module Pastenum
         print ".".green if @verbose
         page = @agent.get("https://github.com/search?langOverride=&language=&q=#{@dork}&repo=&start_value=#{current_page}&type=Code&x=21&y=22")
         page.links.each do |link|
-          #puts "#{link.href}"
           if link.href.match(/\/blob/)
-            #puts "matched blob"
             if @raw
-              matchdata = link.href.match(/(\w+\/\w+)\/(blob)\/([a-z0-9]+)/)
+              matchdata = link.href.match(/([a-zA-Z0-9\-_]+\/[a-zA-Z0-9\-_]+)\/(blob)\/([a-z0-9]+)/)
               address = "https://raw.github.com/#{matchdata[1]}/#{matchdata[3]}/"
               @results << address
             else
-              @results << "https://github.com/#{link.href.split("#").first}"
+              @results << "https://github.com#{link.href.split("#").first}"
             end
           end
           current_page += 1

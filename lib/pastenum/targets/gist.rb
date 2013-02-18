@@ -4,9 +4,6 @@ module Pastenum
     
     def initialize(dork)
       @dork = URI.escape(dork)
-      #@agent = Mechanize.new
-      @max_pages = 25
-      #@results = Array.new
       @vendor = "https://gist.github.com/"
       @raw_url = "https://raw.github.com/gist/"
       

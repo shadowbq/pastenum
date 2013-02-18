@@ -4,10 +4,9 @@ module Pastenum
     
     def initialize(dork)
       @dork = dork
-      @max_pages = 25
-      @results = Array.new
       @vendor = "pastebin.com"
       @raw_url = "http://pastebin.com/raw.php?i="
+      
       super
     end
   

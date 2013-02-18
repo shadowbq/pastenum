@@ -17,13 +17,13 @@ module Pastenum
       options[:pastebin] = true
       options[:gist] = true
       options[:github] = true
-      options[:pastie] = false
+      options[:pastie] = true
       
       options[:raw] = Pastenum::Defaults::Raw
       options[:onion] = false
       options[:test] = false
       options[:verbose] = Pastenum::Defaults::Verbose
-      options[:maxpages] = 2
+      options[:maxpages] = Pastenum::Defaults::MaxPages
       options[:tos] = false
       options[:ssl_verify] = true
       
@@ -44,7 +44,7 @@ module Pastenum
           options[:github] = value
         end
         
-        opt.on("-i","--[no-]pasties","Search pastie.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
+        opt.on("-i","--[no-]pastie","Search pastie.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
           options[:pastie] = value
         end
         
@@ -164,9 +164,10 @@ module Pastenum
         @github.verbose = options[:verbose]
         @github.max_pages = options[:maxpages]
         @github.verify_ssl_mode = OpenSSL::SSL::VERIFY_NONE unless options[:ssl_verify]
+        @github.raw = true if options[:raw]
         @github.search
         @github.summary 
-        @github.raw = true if options[:raw]
+        
         puts @github.results if !options[:report] && !options[:json]
       end
       
@@ -186,6 +187,7 @@ module Pastenum
       if options[:pastie]
         @pastie.verbose = options[:verbose]
         @pastie.max_pages = 2
+        @pastie.raw = true if options[:raw]
         @pastie.search
         @pastie.summary
         puts @pastie.results if !options[:report] && !options[:json]

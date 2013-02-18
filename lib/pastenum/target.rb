@@ -15,6 +15,8 @@ module Pastenum
       
       @raw ||= Pastenum::Defaults::Raw
       @verbose ||= Pastenum::Defaults::Verbose
+      
+      @max_pages ||= Pastenum::Defaults::MaxPages
     end
     
     def verify_ssl_mode
