@@ -1,0 +1,49 @@
+PATH
+  remote: .
+  specs:
+    pastenum (0.2.2)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    bump (0.3.9)
+    colored (1.2)
+    domain_name (0.5.7)
+      unf (~> 0.0.3)
+    gscraper (0.4.0)
+      json (~> 1.6)
+      mechanize (~> 2.0)
+      uri-query_params (~> 0.5)
+    highline (1.6.15)
+    json (1.7.7)
+    mechanize (2.5.1)
+      domain_name (~> 0.5, >= 0.5.1)
+      mime-types (~> 1.17, >= 1.17.2)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.4)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (~> 0.0, >= 0.0.9)
+    mime-types (1.21)
+    net-http-digest_auth (1.2.1)
+    net-http-persistent (2.8)
+    nokogiri (1.5.6)
+    ntlm-http (0.1.1)
+    unf (0.0.5)
+      unf_ext
+    unf_ext (0.0.5)
+    uri-query_params (0.7.0)
+    webrobots (0.0.13)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bump (~> 0.3)
+  colored (~> 1.2)
+  gscraper (~> 0.4)
+  highline
+  json (~> 1.7)
+  mechanize (~> 2.0)
+  pastenum!
+  uri-query_params (~> 0.7)
