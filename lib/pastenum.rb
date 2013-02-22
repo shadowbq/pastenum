@@ -20,5 +20,6 @@ module Pastenum
   require 'pastenum/targets/gist'
   require 'pastenum/targets/github'
   require 'pastenum/targets/pastie'
+  require 'pastenum/targets/pastee'
   require 'pastenum/targets/pastebin'
 end

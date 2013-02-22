@@ -8,9 +8,9 @@
 
 module Pastenum
   class Pastee < Target
-    
+
     def initialize(dork)
-      @dork = URI.escape(dork)
+      @dork = dork
       @vendor = "https://pastee.org"
 
       super
@@ -18,17 +18,17 @@ module Pastenum
 
     def search
       puts "[*] Searching Pastee.org (Limit: First #{@max_pages} Pages)".green if @verbose
-      q = GScraper::Search.query(:query => @dork + " inurl:pastes -inurl:page", :site => 'pastie.org')
+      q = GScraper::Search.query(:query => @dork + " intitle:'Paste' ", :site => 'pastee.org')
       print "[*] Parsing pages:".green if @verbose
       begin
         for i in 1..@max_pages do
           print ".".green if @verbose
           page = q.page(i)
           page.each do |result|
-            if result.url.to_s.match(/[0-9a-ZA-Z]+$/)
-              code = result.url.to_s.split("/").last
-              # code -> "9gxe6"
-                @results << "http://pastee.org/#{code}"
+            if result.url.to_s.match(/[0-9a-zA-Z]+$/)
+              #code = result.url.to_s.split("/").last
+              #code -> "9gxe6"
+              @results << result.url.to_s
             end
           end
         end

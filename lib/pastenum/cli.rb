@@ -33,23 +33,23 @@ module Pastenum
         opt.separator ""
         opt.separator "Sources::"
         
-        opt.on("-p","--[no-]pastebin","Search Pastebin.com (Gscraper)","  Default: #{options[:pastebin]}") do |value|
+        opt.on("","--[no-]pastebin","Search Pastebin.com (Gscraper)","  Default: #{options[:pastebin]}") do |value|
           options[:pastebin] = value
         end
         
-        opt.on("-g","--[no-]gist","Search Gist.github.com","  Default: #{options[:gist]}") do |value|
+        opt.on("","--[no-]gist","Search Gist.github.com","  Default: #{options[:gist]}") do |value|
           options[:gist] = value
         end
         
-        opt.on("-G","--[no-]github","Search github.com","  Default: #{options[:github]}") do |value|
+        opt.on("","--[no-]github","Search github.com","  Default: #{options[:github]}") do |value|
           options[:github] = value
         end
         
-        opt.on("-i","--[no-]pastie","Search pastie.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
+        opt.on("","--[no-]pastie","Search pastie.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
           options[:pastie] = value
         end
         
-        opt.on("-i","--[no-]pastee","Search pastee.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
+        opt.on("","--[no-]pastee","Search pastee.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
           options[:pastee] = value
         end
         
@@ -149,7 +149,7 @@ module Pastenum
       @github = Pastenum::Github.new(dork)
       @pastebin = Pastenum::Pastebin.new(dork)
       @pastie = Pastenum::Pastie.new(dork)
-      
+      @pastee = Pastenum::Pastee.new(dork)
       
       if options[:gist]
         
