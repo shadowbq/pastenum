@@ -20,15 +20,15 @@ module Pastenum
             if @raw
             # Raw links do not use username only the code            
             # "4556950"
-             if link.href.match(/\w+\/([0-9]+)/)
-                 @results <<  link.href.match(/\w+\/([0-9]+)/)[1] 
+             if link.href.match(/[a-zA-Z0-9\-_\.]+\/([0-9]+)/)
+                 @results <<  link.href.match(/[a-zA-Z0-9\-_\.]+\/([0-9]+)/)[1] 
               end
             else 
             # Example Hits to find stad links need username
             # "/shadowbq/4556950"
             # "/shadowbq/2718948"
-              if link.href.match(/(\w+\/[0-9]+)/)
-                 @results << link.href.match(/(\w+\/[0-9]+)/)[1]
+              if link.href.match(/([a-zA-Z0-9\-_\.]+\/[0-9]+)/)
+                 @results << link.href.match(/([a-zA-Z0-9\-_\.]+\/[0-9]+)/)[1]
               end
             end
             
