@@ -1,9 +1,10 @@
 module Pastenum
   class Report
   
-    def initialize(dork,addresses_pastie,addresses_pastebin,addresses_github,addresses_gist)
+    def initialize(dork,addresses_pastie,addresses_pastee,addresses_pastebin,addresses_github,addresses_gist)
       @dork = dork
-      @addresses_pastie = addresses_pastie 
+      @addresses_pastie = addresses_pastie
+      @addresses_pastie = addresses_pastee 
       @addresses_pastebin = addresses_pastebin
       @addresses_github = addresses_github
       @addresses_gist = addresses_gist
@@ -64,6 +65,16 @@ module Pastenum
       unless @addresses_pastie.empty?
         file.write("<h2>Search Term: \"#{@dork}\" <br /> Site: Pastie - Found: #{@addresses_pastie.count} Items</h2>\n")
         @addresses_pastie.each do |links|
+          file.write("<p><iframe src=#{links}/text style=\"width: 100%; height: 300px; background-color: white\"></iframe><p>link: <a href=\"#{links}\" target=\"_blank\">#{links}</a>\n")
+          print ".".green
+        end
+        file.write("<hr><hr>")
+      end
+      
+      #Pastee.org
+      unless @addresses_pastie.empty?
+        file.write("<h2>Search Term: \"#{@dork}\" <br /> Site: Pastee - Found: #{@addresses_pastee.count} Items</h2>\n")
+        @addresses_pastee.each do |links|
           file.write("<p><iframe src=#{links}/text style=\"width: 100%; height: 300px; background-color: white\"></iframe><p>link: <a href=\"#{links}\" target=\"_blank\">#{links}</a>\n")
           print ".".green
         end

@@ -1,23 +1,23 @@
-# Search implementation for pastie.org (Gscraper)
+#Internal search implementation for pastee.org (Gscraper)
 # Standard link
-# http://pastie.org/pastes/6208073
+# https://pastee.org/9gxe6
 # Raw link
-# http://pastie.org/pastes/6208073/text
+# No Raw link available
 
-# url -> "http://pastie.org/pastes/6700343"
+# url -> "https://pastee.org/9gxe6"
 
 module Pastenum
-  class Pastie < Target
+  class Pastee < Target
     
     def initialize(dork)
       @dork = URI.escape(dork)
-      @vendor = "http://pastie.org"
+      @vendor = "https://pastee.org"
 
       super
     end
 
     def search
-      puts "[*] Searching Pastie.com (Limit: First #{@max_pages} Pages)".green if @verbose
+      puts "[*] Searching Pastee.org (Limit: First #{@max_pages} Pages)".green if @verbose
       q = GScraper::Search.query(:query => @dork + " inurl:pastes -inurl:page", :site => 'pastie.org')
       print "[*] Parsing pages:".green if @verbose
       begin
@@ -25,14 +25,10 @@ module Pastenum
           print ".".green if @verbose
           page = q.page(i)
           page.each do |result|
-            if result.url.to_s.match(/pastes\/[0-9]+$/)
+            if result.url.to_s.match(/[0-9a-ZA-Z]+$/)
               code = result.url.to_s.split("/").last
-              # code -> "6700343"
-              if @raw 
-                @results << "http://pastie.org/pastes/#{code}/text"
-              else
-                @results << "http://pastie.org/pastes/#{code}"
-              end
+              # code -> "9gxe6"
+                @results << "http://pastee.org/#{code}"
             end
           end
         end

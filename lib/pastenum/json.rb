@@ -1,13 +1,23 @@
 module Pastenum
   class JSON
   
-    def initialize(dork, pastie, pastebin, github, gist)
+    def initialize(dork, sites)
+      @data =  [{:search => dork}]
+      sites.each do |site|
+        @data << {site.vendor => site.results}
+      end 
+    end  
+      
+    def to_s
+      return @data
+    end
+    
+    def to_file  
       file = File.open('report.json', 'w') 
-      data =  [{:search => dork}, {gist.vendor => gist.results}, {github.vendor => github.results},  {pastebin.vendor => pastebin.results}, {pastie.vendor => pastie.results} ].to_json
-      file.write(data)
+      file.write(data.to_json)
       file.close
       
-      return data
+      return @data
     end
       
   end

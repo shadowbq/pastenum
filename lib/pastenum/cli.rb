@@ -18,6 +18,7 @@ module Pastenum
       options[:gist] = true
       options[:github] = true
       options[:pastie] = true
+      options[:pastee] = true
       
       options[:raw] = Pastenum::Defaults::Raw
       options[:onion] = false
@@ -46,6 +47,10 @@ module Pastenum
         
         opt.on("-i","--[no-]pastie","Search pastie.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
           options[:pastie] = value
+        end
+        
+        opt.on("-i","--[no-]pastee","Search pastee.org (Gscraper)","  Default: #{options[:pastie]}") do |value|
+          options[:pastee] = value
         end
         
         opt.separator "Report Output:: (Default output to STDOUT)"
@@ -193,12 +198,21 @@ module Pastenum
         puts @pastie.results if !options[:report] && !options[:json]
       end
       
+      if options[:pastee]
+        @pastee.verbose = options[:verbose]
+        @pastee.max_pages = 2
+        @pastee.search
+        @pastee.summary
+        puts @pastee.results if !options[:report] && !options[:json]
+      end
+      
+      
       if options[:report]
-        Pastenum::Report.new(dork, @pastie.results, @pastebin.results, @github.results, @gist.results).to_file
+        Pastenum::Report.new(dork, @pastie.results, @pastee.results, @pastebin.results, @github.results, @gist.results).to_file
       end
       
       if options[:json]
-        Pastenum::JSON.new(dork, @gist, @github, @pastebin, @pastie)
+        Pastenum::JSON.new(dork, [@gist, @github, @pastebin, @pastie, @pastee]).to_file
       end
 
     end
