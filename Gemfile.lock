@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pastenum (0.3.0)
+    pastenum (0.3.1)
 
 GEM
   remote: http://rubygems.org/
