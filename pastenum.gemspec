@@ -14,4 +14,13 @@ Gem::Specification.new name, Pastenum::VERSION do |s|
   s.required_rubygems_version = ">= 1.8.1"
   
   s.executables = ["pastenum"]
+  
+  s.add_dependency "mechanize",        "~> 2.0"
+  s.add_dependency "gscraper",         "~> 0.4"
+  s.add_dependency "uri-query_params", "~> 0.7"
+  s.add_dependency "colored",          "~> 1.2"
+  s.add_dependency "bump",             "~> 0.3"
+  s.add_dependency "json",             "~> 1.7"
+  s.add_dependency "highline"
+
 end
