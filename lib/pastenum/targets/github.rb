@@ -10,16 +10,6 @@
 
 # Raw url
 # https://raw.github.com/ryuzee/PHPMyScrum/71dc45c31220bfa04057f9c65a7dfbc046871fa6/.box
-
-# [8] pry(main)> b = "https://github.com/ryuzee/foo1/blob/71dc45c31220bfa04057f9c65a7dfbc046871fa6/.box"
-# [9] pry(main)> b.match(/(\w+\/\w+)\/(blob)\/([a-z0-9]+)/)
-# => #<MatchData
-# "ryuzee/foo1/blob/71dc45c31220bfa04057f9c65a7dfbc046871fa6"
-# 1:"ryuzee/foo1"
-# 2:"blob"
-# 3:"71dc45c31220bfa04057f9c65a7dfbc046871fa6">
-
-
 module Pastenum
   class Github < Target
     
@@ -40,7 +30,7 @@ module Pastenum
         page.links.each do |link|
           if link.href.match(/\/blob/)
             if @raw
-              matchdata = link.href.match(/([a-zA-Z0-9\-_]+\/[a-zA-Z0-9\-_]+)\/(blob)\/([a-z0-9]+)/)
+              matchdata = link.href.match(/([a-zA-Z0-9\-_\.]+\/[a-zA-Z0-9\-_\.]+)\/(blob)\/([a-z0-9]+)/)
               address = "https://raw.github.com/#{matchdata[1]}/#{matchdata[3]}/"
               @results << address
             else
