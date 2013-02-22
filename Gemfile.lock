@@ -1,7 +1,14 @@
 PATH
   remote: .
   specs:
-    pastenum (0.4.0)
+    pastenum (0.4.1)
+      bump (~> 0.3)
+      colored (~> 1.2)
+      gscraper (~> 0.4)
+      highline
+      json (~> 1.7)
+      mechanize (~> 2.0)
+      uri-query_params (~> 0.7)
 
 GEM
   remote: http://rubygems.org/
