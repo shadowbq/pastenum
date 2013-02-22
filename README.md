@@ -2,7 +2,7 @@
 
 Pastenum is a text dump enumeration tool. It is designed to help find and enumerate datadumps, and doxs posted on public sites. 
 
-It currently searches sites github.com, gist.github.com, pastebin.com, and pastie.org.
+It currently searches sites github.com, gist.github.com, pastebin.com, pastee.org, and pastie.org.
 
 Pastenum is a gem rewrite of nullthreat's original [pastenum2](http://redmine.corelan.be/projects/corelan-pastenum) released in 2011. 
 
@@ -25,17 +25,24 @@ Pastenum is a gem rewrite of nullthreat's original [pastenum2](http://redmine.co
 Usage: pastenum [OPTIONS] "search string"
 
 Sources::
-    -p, --[no-]pastebin              Search Pastebin.com (Gscraper)
+        --[no-]pastebin
+                                     Search Pastebin.com (Gscraper)
                                        Default: true
-    -g, --[no-]gist                  Search Gist.github.com
+        --[no-]gist
+                                     Search Gist.github.com
                                        Default: true
-    -G, --[no-]github                Search github.com
+        --[no-]github
+                                     Search github.com
                                        Default: true
-    -i, --[no-]pasties               Search pastie.org (Gscraper)
+        --[no-]pastie
+                                     Search pastie.org (Gscraper)
+                                       Default: true
+        --[no-]pastee
+                                     Search pastee.org (Gscraper)
                                        Default: true
 Report Output:: (Default output to STDOUT)
-    -H, --html-report                Create an html iframed (report.html)
-    -J, --json-report                Create a JSON file (report.json)
+    -H, --html-report                Create an html iframed (report.html) 
+    -J, --json-report                Create a JSON file (report.json) 
 Options::
     -r, --[no-]raw                   use 'raw' urls instead if available
                                        Default: false
@@ -55,7 +62,7 @@ Options::
 Gist and Github code search for 'shadowbq' skipping ssl cert verfication
 
 ```shell
-(~)$  pastenum -x --no-pastebin --no-pastie --no-ssl-verify "shadowbq"
+(~)$  pastenum -x --no-pastebin --no-pastie --no-pastee --no-ssl-verify "shadowbq"
 https://gist.github.com/shadowbq/325430
 https://gist.github.com/shadowbq/4556950
 https://gist.github.com/shadowbq/2718948
