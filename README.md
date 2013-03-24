@@ -1,15 +1,20 @@
 #Pastenum
 [![Gem Version](https://badge.fury.io/rb/pastenum.png)](http://badge.fury.io/rb/pastenum)
 
-[![Code Climate](https://codeclimate.com/github/shadowbq/pastenum.png)](https://codeclimate.com/github/shadowbq/pastenum)
-[![Build Status](https://travis-ci.org/shadowbq/pastenum.png)](https://travis-ci.org/shadowbq/pastenum)
-[![Coverage Status](https://coveralls.io/repos/shadowbq/pastenum/badge.png?branch=master)](https://coveralls.io/r/shadowbq/pastenum)
-
 Pastenum is a text dump enumeration tool. It is designed to help find and enumerate datadumps, and doxs posted on public sites. 
 
 It currently searches sites github.com, gist.github.com, pastebin.com, pastee.org, and pastie.org.
 
 Pastenum is a gem rewrite of nullthreat's original [pastenum2](http://redmine.corelan.be/projects/corelan-pastenum) released in 2011. 
+
+## Code Status
+
+[![Code Climate](https://codeclimate.com/github/shadowbq/pastenum.png)](https://codeclimate.com/github/shadowbq/pastenum)
+[![Build Status](https://travis-ci.org/shadowbq/pastenum.png)](https://travis-ci.org/shadowbq/pastenum)
+[![Coverage Status](https://coveralls.io/repos/shadowbq/pastenum/badge.png?branch=master)](https://coveralls.io/r/shadowbq/pastenum)
+
+[![Dependency Status](https://gemnasium.com/shadowbq/pastenum.png)](https://gemnasium.com/shadowbq/pastenum)
+
 
 ## Install:
 
